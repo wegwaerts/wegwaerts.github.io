@@ -1,0 +1,13 @@
+title: 2 mal Wegwärts
+email: info@wegwaerts.de
+description: >-
+baseurl: ""
+url: "https://wegwaerts.de"
+
+instagram_username: _the_curly_head
+facebook_username: wegwaerts
+
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed

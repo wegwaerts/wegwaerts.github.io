@@ -1,0 +1,78 @@
+---
+layout: default
+---
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    {% if page.subtitle %}<h3 class="post-subtitle">{{ page.subtitle }}</h3>{% endif %}
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        {{ page.date | date: date_format }}
+      </time>
+      {%- if page.author -%}
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span></span>
+      {%- endif -%}</p>
+    {% if page.image %}
+    <div class="post-image" style="background-color: #efefef; background-image: url('{{ page.image }}'); background-size: cover;background-position: center;padding-bottom: 33%; border-radius: 5px;"></div>
+    {% endif %}
+  </header>
+
+  <style>
+    .post-content img {
+      border-radius: 4px;
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      object-position: center;
+    }
+    .post-content img + em, .post-content .lightbox + em {
+      color: #757575;
+      display: block;
+      margin-top: 6px;
+    }
+    .lightbox {
+      position: relative;
+      display: block;
+    }
+    .lightbox::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    .lightbox:hover::before {
+      opacity: 1;
+    }
+  </style>
+  <div class="post-content e-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+
+  <script type="text/javascript">
+  // wrap all images
+  const imageList = document.querySelectorAll('.post-content img')
+  for (i = 0; i < imageList.length; ++i) {
+    const image = imageList[i];
+    let wrapper = document.createElement('a');
+    wrapper.href = image.src;
+    wrapper.title = image.alt;
+    wrapper.className = 'lightbox';
+
+    image.parentNode.insertBefore(wrapper, image);
+    wrapper.appendChild(image);
+  }
+
+  {% include js/simpleLightbox.min.js %}
+  new SimpleLightbox({elements: '.post-content a.lightbox'});
+  </script>
+
+</article>
